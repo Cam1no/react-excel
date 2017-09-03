@@ -9,6 +9,17 @@ class Excel extends React.Component {
     }
   }
 
+  propTypes(){
+    headers: React.PropTypes.arrayOf(
+      React.PropTypes.string
+    )
+    data: React.PropTypes.arrayOf(
+      React.PropTypes.arrayOf(
+        React.PropTypes.string
+      )
+    )
+  }
+
   render(){
     return(
       <table>
