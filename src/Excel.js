@@ -1,6 +1,7 @@
 import React from 'react';
 
 class Excel extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -8,17 +9,16 @@ class Excel extends React.Component {
       headers: props.headers
     }
   }
-
-  propTypes(){
-    headers: React.PropTypes.arrayOf(
-      React.PropTypes.string
-    )
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.arrayOf(
-        React.PropTypes.string
-      )
-    )
-  }
+  // propTypes(){
+  //   headers: React.PropTypes.arrayOf(
+  //     React.PropTypes.string
+  //   )
+  //   data: React.PropTypes.arrayOf(
+  //     React.PropTypes.arrayOf(
+  //       React.PropTypes.string
+  //     )
+  //   )
+  // }
 
   render(){
     return(
