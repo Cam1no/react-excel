@@ -1,6 +1,12 @@
 import React from 'react';
 
 class Excel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data
+    }
+  }
 
   render(){
     return(
@@ -15,7 +21,7 @@ class Excel extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.data.map((row, idx) => {
+          {this.state.data.map((row, idx) => {
             return(
               <tr key={idx}>{row.map((cell, idx) => {
                   return(
