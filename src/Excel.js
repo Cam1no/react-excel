@@ -8,6 +8,8 @@ class Excel extends React.Component {
       data: props.data,
       headers: props.headers
     }
+    // 作ったメソッドはここでbindしないと使えない
+    this._sort = this._sort.bind(this)
   }
   // propTypes(){
   //   headers: React.PropTypes.arrayOf(
@@ -20,10 +22,22 @@ class Excel extends React.Component {
   //   )
   // }
 
+  _sort(e){
+    var column = e.target.cellIndex;
+    var data = this.state.data.slice();
+    data.sort(function(a, b) {
+      return a[column] > b[column] ? 1 : -1;
+    });
+    this.setState({
+      data: data,
+    });
+  }
+
+
   render(){
     return(
       <table>
-        <thead>
+        <thead onClick={this._sort}>
           <tr>
             {this.state.headers.map((title, idx) => {
               return(
