@@ -7,9 +7,9 @@ class Excel extends React.Component {
       <table>
         <thead>
           <tr>
-            {this.props.headers.map((title) => {
+            {this.props.headers.map((title, idx) => {
               return(
-                <th>{title}</th>
+                <th key={idx}>{title}</th>
               );
             })}
           </tr>
