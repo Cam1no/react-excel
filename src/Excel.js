@@ -7,10 +7,13 @@ class Excel extends React.Component {
     this.state = {
       data: props.data,
       sortby: null,
-      descending: false
+      descending: false,
+      edit: null
     }
     // 作ったメソッドはここでbindしないと使えない
     this._sort = this._sort.bind(this)
+    this._showEditor = this._showEditor.bind(this)
+    this._save = this._save.bind(this)
   }
   // propTypes(){
   //   headers: React.PropTypes.arrayOf(
@@ -39,6 +42,26 @@ class Excel extends React.Component {
     });
   }
 
+  _showEditor(e){
+    this.setState({
+      edit: {
+        row: parseInt(e.target.dataset.row, 10),
+        cell: e.target.cellIndex
+      }
+    })
+  }
+
+  _save(e){
+    e.preventDefault();
+    var input = e.target.firstChild;
+    var data = this.state.data.slice();
+    data[this.state.edit.row][this.state.edit.cell] = input.value;
+    this.setState({
+      edit: null,
+      data: data,
+    });
+  }
+
 
   render(){
     return(
@@ -55,12 +78,24 @@ class Excel extends React.Component {
             })}
           </tr>
         </thead>
-        <tbody>
-          {this.state.data.map((row, idx) => {
+        <tbody onDoubleClick={this._showEditor}>
+          {this.state.data.map((row, rowidx) => {
             return(
-              <tr key={idx}>{row.map((cell, idx) => {
+              <tr key={rowidx}>{row.map((cell, idx) => {
+                  var content = cell;
+                  var edit = this.state.edit;
+                  if (edit && edit.row === rowidx && edit.cell === idx) {
+                    content = React.DOM.form({onSubmit: this._save},
+                      React.DOM.input({
+                        type: 'text',
+                        defaultValue: cell,
+                      })
+                    );
+                  }
                   return(
-                    <td key={idx}>{cell}</td>
+                    <td key={idx} data-row={rowidx}>
+                      {content}
+                    </td>
                   );
                 })}
               </tr>
