@@ -4,7 +4,8 @@ class Excel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data,
+      headers: props.headers
     }
   }
 
@@ -13,7 +14,7 @@ class Excel extends React.Component {
       <table>
         <thead>
           <tr>
-            {this.props.headers.map((title, idx) => {
+            {this.state.headers.map((title, idx) => {
               return(
                 <th key={idx}>{title}</th>
               );
