@@ -6,7 +6,8 @@ class Excel extends React.Component {
     super(props);
     this.state = {
       data: props.data,
-      headers: props.headers
+      sortby: null,
+      descending: false
     }
     // 作ったメソッドはここでbindしないと使えない
     this._sort = this._sort.bind(this)
@@ -25,11 +26,16 @@ class Excel extends React.Component {
   _sort(e){
     var column = e.target.cellIndex;
     var data = this.state.data.slice();
+    var descending = this.state.sortby === column && !this.state.descending;
     data.sort(function(a, b) {
-      return a[column] > b[column] ? 1 : -1;
+      return descending
+        ? (a[column] < b[column] ? 1 : -1)
+        : (a[column] > b[column] ? 1 : -1);
     });
     this.setState({
       data: data,
+      sortby: column,
+      descending: descending
     });
   }
 
@@ -39,7 +45,10 @@ class Excel extends React.Component {
       <table>
         <thead onClick={this._sort}>
           <tr>
-            {this.state.headers.map((title, idx) => {
+            {this.props.headers.map((title, idx) => {
+              if (this.state.sortby === idx) {
+                title += this.state.descending ? ' \u2191' : ' \u2193'
+              }
               return(
                 <th key={idx}>{title}</th>
               );
