@@ -14,6 +14,18 @@ class Excel extends React.Component {
             })}
           </tr>
         </thead>
+        <tbody>
+          {this.props.data.map((row, idx) => {
+            return(
+              <tr key={idx}>{row.map((cell, idx) => {
+                  return(
+                    <td key={idx}>{cell}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     );
   }
